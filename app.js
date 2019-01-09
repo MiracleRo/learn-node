@@ -1,25 +1,12 @@
-const Koa = require('koa')
-const Router  = require('koa-router')
+import Koa from 'koa'
+// import Router from 'koa-router'
+import routers from './routes/index'
 
+// const router = new Router()
 const app = new Koa()
-const router = new Router()
-
-// app.use(ctx => {
-//   ctx.body = 'hello koa'
-// })
-
-router.get('/', (ctx, next) => {
-  // ctx.router available
-  ctx.body = 'hello koa'
-})
-
-router.get('/users/:id', (ctx, next) => {
-  // ctx.router available
-  ctx.body = 'hello users'
-})
 
 app
-  .use(router.routes())
-  .use(router.allowedMethods());
+  .use(routers.routes())
+  .use(routers.allowedMethods());
 
 app.listen(3000)
