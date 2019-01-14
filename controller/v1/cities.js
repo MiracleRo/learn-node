@@ -17,7 +17,10 @@ class CityHandle extends AddressComponent {
         case 'guess':
         const city = await this.getCityName(ctx.req)
         cityInfo = await Cities.cityGuess(city)
-        break;
+        break
+        case 'hot':
+        cityInfo = await Cities.cityHot()
+        break
         default: 
           cityInfo = {
             name: 'ERROR_QUERY_TYPE',

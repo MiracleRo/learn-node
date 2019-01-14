@@ -19757,6 +19757,17 @@ export default {
   pinyin: "tianjin"
   },
   {
+  id: 3,
+  name: "北京",
+  abbr: "BJ",
+  area_code: "010",
+  sort: 2000,
+  latitude: 39.90469,
+  longitude: 116.407173,
+  is_map: true,
+  pinyin: "beijing"
+  },
+  {
   id: 28,
   name: "青岛",
   abbr: "QD",
