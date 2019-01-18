@@ -32,7 +32,6 @@ citySchema.statics.cityHot = function () {
   return new Promise(async (resolve, reject) => {
     try {
       const city = await this.findOne()
-      console.log(city)
       resolve(city.data.hotCities)
     } catch (err) {
       reject({
@@ -69,7 +68,6 @@ citySchema.statics.getCityById = function (id) {
         if (item[0] !== 'hotCities' && item[0] !== '_id') {
           item[1].map(data => {
             if (data.id === parseInt(id)) {
-              console.log(data)
               resolve(data)
             }
           })

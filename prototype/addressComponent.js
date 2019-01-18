@@ -73,6 +73,24 @@ class AddressComponent extends BaseComponent {
       }
     })
   }
+
+  async searchPlace (keyword, cityName, type = 'search') {
+    try {
+      const resObj = await this.httpRequset('http://apis.map.qq.com/ws/place/v1/search', {
+        key: this.tencentkey,
+        keyword: encodeURIComponent(keyword),
+        boundary: `region(${encodeURIComponent(cityName)},0)`,
+        page_size: 10
+      })
+      if (resObj.status === 0) {
+        return resObj
+      } else {
+        throw new Error('搜索位置信息失败')
+      }
+    } catch (err) {
+      throw new Error(err)
+    }
+  } 
 }
 
 export default AddressComponent

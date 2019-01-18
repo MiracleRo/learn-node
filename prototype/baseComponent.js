@@ -20,7 +20,6 @@ export default class BaseComponent {
 				url = url + '?' + dataStr
 			}
     }
-    
     let requestConfig = {
 			method: type,
 			headers: {
