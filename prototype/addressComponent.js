@@ -90,7 +90,38 @@ class AddressComponent extends BaseComponent {
     } catch (err) {
       throw new Error(err)
     }
-  } 
+  }
+
+  async getpois(lat, lng) {
+    try {
+      
+      const params = {
+        location: `${lat},${lng}`,
+        key: this.tencentkey
+      }
+      let res = await this.httpRequset('https://apis.map.qq.com/ws/geocoder/v1/', params)
+      if (res.status !== 0) {
+        params.key = this.tencentkey2;
+	 			res = await this.fetch('http://apis.map.qq.com/ws/geocoder/v1/', params)
+      }
+      if (res.status != 0) {
+        params.key = this.tencentkey3;
+        res = await this.fetch('http://apis.map.qq.com/ws/geocoder/v1/', params);
+      }
+      if (res.status != 0) {
+        params.key = this.tencentkey4;
+        res = await this.fetch('http://apis.map.qq.com/ws/geocoder/v1/', params);
+      }
+     if (res.status == 0) {
+       return res
+     } else {
+       throw new Error('通过获geohash取具体位置失败');
+     }
+    } catch (err) {
+      console.log('定位失败' +err)
+      throw new Error(err)
+    }
+  }
 }
 
 export default AddressComponent

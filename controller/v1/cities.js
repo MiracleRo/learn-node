@@ -7,6 +7,7 @@ class CityHandle extends AddressComponent {
   constructor () {
     super()
     this.getCity = this.getCity.bind(this)
+    this.pois = this.pois.bind(this)
   }
   async getCity(ctx, next) {
     const type = ctx.query.type
@@ -72,6 +73,37 @@ class CityHandle extends AddressComponent {
       return cityName
     } catch (err) {
       return '北京'
+    }
+  }
+
+  async pois(ctx, next) {
+    try {
+      const geohash = ctx.params.geohash || ''
+      if (geohash.indexOf(',') < 0) {
+        ctx.body = {
+          status: 0,
+					type: 'ERROR_PARAMS',
+					message: '参数错误',
+        }
+      }
+      const poisArr = geohash.split(',')
+      const result = await this.getpois(poisArr[0], poisArr[1])
+      ctx.body = {
+        address: result.result.address,
+				city: result.result.address_component.province,
+				geohash,
+				latitude: poisArr[0],
+				longitude: poisArr[1],
+				name: result.result.formatted_addresses.recommend
+      }
+
+    } catch (err) {
+      console.log('getpois返回信息失败', err)
+      ctx.body = {
+        status: 0,
+				type: 'ERROR_DATA',
+				message: '获取数据失败',
+      }
     }
   }
 }
