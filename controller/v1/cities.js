@@ -21,6 +21,9 @@ class CityHandle extends AddressComponent {
         case 'hot':
         cityInfo = await Cities.cityHot()
         break
+        case 'group':
+        cityInfo = await Cities.cityGroup()
+        break
         default: 
           cityInfo = {
             name: 'ERROR_QUERY_TYPE',
@@ -35,6 +38,27 @@ class CityHandle extends AddressComponent {
       }
     }
   }
+
+  async getCityById(ctx, next) {
+    const cityId = ctx.params.id
+    if (isNaN(cityId)) {
+      ctx.body = {
+        name: 'ERROR_PARAM_TYPE',
+				message: '参数错误',
+      }
+      return
+    }
+    try {
+      const cityInfo = await Cities.getCityById(cityId)
+      ctx.body = cityInfo
+    } catch (err) {
+      ctx.body = {
+        name: 'ERROR_DATA',
+				message: '获取数据失败',
+      }
+    }
+  }
+
   async getCityName(req) {
     try {
       const cityInfo = await this.guessPosition(req)
